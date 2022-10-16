@@ -1834,7 +1834,7 @@ dependencies = [
 
 [[package]]
 name = "topgrade-rs"
-version = "9.0.1"
+version = "9.1.0-rc1"
 dependencies = [
  "anyhow",
  "cfg-if",
