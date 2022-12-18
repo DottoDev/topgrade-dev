@@ -71,6 +71,16 @@ pub fn which<T: AsRef<OsStr> + Debug>(binary_name: T) -> Option<PathBuf> {
         }
     }
 }
+pub fn sudo() -> Option<PathBuf> {
+    #[cfg(test)]
+    return which("doas");
+
+    #[cfg(not(test))]
+    which("doas")
+        .or_else(|| which("sudo"))
+        .or_else(|| which("gsudo"))
+        .or_else(|| which("pkexec"))
+}
 
 pub fn editor() -> Vec<String> {
     #[cfg(not(test))]
