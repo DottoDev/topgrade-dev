@@ -48,6 +48,9 @@ color-eyre = "~0.6"
 tracing = { version = "~0.1", features = ["attributes", "log"] }
 tracing-subscriber = { version = "~0.3", features = ["env-filter", "time"] }
 
+[dev-dependencies]
+pretty_assertions = "~1.3"
+
 [target.'cfg(target_os = "macos")'.dependencies]
 notify-rust = "~4.5"
 

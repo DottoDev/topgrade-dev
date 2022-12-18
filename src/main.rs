@@ -1,5 +1,6 @@
 #![allow(clippy::cognitive_complexity)]
 
+use directories::BaseDirs;
 use std::env;
 use std::io;
 use std::process::exit;
@@ -39,7 +40,7 @@ fn run() -> Result<()> {
     color_eyre::install()?;
     ctrlc::set_handler();
 
-    let base_dirs = directories::BaseDirs::new().ok_or_else(|| eyre!("No base directories"))?;
+    let base_dirs = BaseDirs::new().ok_or_else(|| anyhow!("No base directories"))?;
 
     let opt = CommandLineArgs::parse();
 

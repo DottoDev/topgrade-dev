@@ -516,6 +516,29 @@ impl CommandLineArgs {
     pub fn env_variables(&self) -> &Vec<String> {
         &self.env
     }
+    #[cfg(test)]
+    pub fn new() -> CommandLineArgs {
+        CommandLineArgs {
+            edit_config: false,
+            show_config_reference: false,
+            run_in_tmux: false,
+            cleanup: false,
+            dry_run: false,
+            no_retry: true,
+            disable: Vec::new(),
+            only: Vec::new(),
+            custom_commands: Vec::new(),
+            env: Vec::new(),
+            verbose: true,
+            keep_at_end: false,
+            skip_notify: true,
+            yes: None,
+            disable_predefined_git_repos: true,
+            config: None,
+            remote_host_limit: None,
+            show_skipped: false,
+        }
+    }
 
     pub fn tracing_filter_directives(&self) -> String {
         if self.verbose {
@@ -538,6 +561,16 @@ pub struct Config {
 }
 
 impl Config {
+    #[cfg(test)]
+    pub fn new(opt: CommandLineArgs) -> Result<Self> {
+        let allowed_steps = Self::allow_all_steps();
+        let config_file = ConfigFile::default();
+        Ok(Self {
+            opt,
+            allowed_steps,
+            config_file,
+        })
+    }
     /// Load the configuration.
     ///
     /// The function parses the command line arguments and reading the configuration file.
@@ -601,6 +634,13 @@ impl Config {
     /// or the `disable` option in the configuration, the function returns false.
     pub fn should_run(&self, step: Step) -> bool {
         self.allowed_steps.contains(&step)
+    }
+
+    #[cfg(test)]
+    fn allow_all_steps() -> Vec<Step> {
+        let mut enabled_steps: Vec<Step> = Vec::new();
+        enabled_steps.extend(Step::iter());
+        return enabled_steps;
     }
 
     fn allowed_steps(opt: &CommandLineArgs, config_file: &ConfigFile) -> Vec<Step> {

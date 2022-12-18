@@ -684,6 +684,7 @@ pub fn run_config_update(ctx: &ExecutionContext) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::execution_context::ExecutionContext;
 
     fn test_template(os_release_file: &str, expected_distribution: Distribution) {
         let os_release = Ini::load_from_str(os_release_file).unwrap();
