@@ -52,7 +52,7 @@ where
 }
 
 pub fn which<T: AsRef<OsStr> + Debug>(binary_name: T) -> Option<PathBuf> {
-    match which_crate::which(&binary_name) {
+    match which_crate_which(&binary_name) {
         Ok(path) => {
             debug!("Detected {:?} as {:?}", &path, &binary_name);
             Some(path)

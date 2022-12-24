@@ -47,12 +47,12 @@ impl<'a> ExecutionContext<'a> {
         use crate::{executor, utils};
 
         let run_type = executor::RunType::new(false);
-        let sudo = utils::sudo();
+        let sudo = Sudo::detect();
         let git = git::Git::new();
         let opt = CommandLineArgs::new();
         let config = Config::new(opt).unwrap();
         let base_dirs = BaseDirs::new().unwrap();
-        let ctx = execution_context::ExecutionContext::new(run_type, &sudo, &git, &config, &base_dirs);
+        let ctx = execution_context::ExecutionContext::new(run_type, sudo, &git, &config, &base_dirs);
         todo!()
     }
 

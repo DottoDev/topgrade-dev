@@ -519,6 +519,9 @@ impl CommandLineArgs {
     #[cfg(test)]
     pub fn new() -> CommandLineArgs {
         CommandLineArgs {
+            log_filter: String::new(),
+            gen_completion: None,
+            gen_manpage: false,
             edit_config: false,
             show_config_reference: false,
             run_in_tmux: false,
